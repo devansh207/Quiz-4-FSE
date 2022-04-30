@@ -1,0 +1,21 @@
+version "1.0-SNAPSHOT"
+
+dependencies {
+    compile project(":components:articles")
+    compile project(":components:endpoints")
+
+    compile project(":components:metrics-support")
+    compile project(":components:rest-support")
+    compile project(":components:workflow-support")
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes "Main-Class": "io.collective.start.App"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
